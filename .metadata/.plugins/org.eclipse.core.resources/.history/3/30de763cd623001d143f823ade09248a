@@ -1,0 +1,66 @@
+package com.website.ecommerce.services.impl;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.website.ecommerce.dao.SellerRepo;
+import com.website.ecommerce.dto.SellerDto;
+import com.website.ecommerce.dto.UserDto;
+import com.website.ecommerce.entities.Seller;
+import com.website.ecommerce.entities.User;
+import com.website.ecommerce.exceptions.ResourceAlreadyExistException;
+import com.website.ecommerce.services.SellerService;
+
+public class SellerServiceImpl implements SellerService {
+	
+	@Autowired
+	private SellerRepo sellerRepo;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public SellerDto registerNewSeller(SellerDto sellerDto) {
+		
+String username = sellerDto.getUsername();
+		
+		if(sellerRepo.findByUsername(username).isPresent()) {
+			throw new ResourceAlreadyExistException("User", "username", username);
+		}
+		String email = sellerDto.getEmail();
+		if(sellerRepo.findByEmail(email).isPresent()) {
+			throw new ResourceAlreadyExistException("User", "email", email);
+		}
+		
+		Seller seller = modelMapper.map(sellerDto, Seller.class);
+		Seller createdSeller = sellerRepo.save(seller);
+		return modelMapper.map(createdSeller, SellerDto.class);
+	}
+
+	@Override
+	public void sellerLogin() {
+
+		
+	}
+
+	@Override
+	public SellerDto findSellerById(Integer sellerId) {
+
+		return null;
+	}
+
+	@Override
+	public List<SellerDto> findAllSeller() {
+
+		return null;
+	}
+
+	@Override
+	public SellerDto updateUser(Integer sellerId, SellerDto sellerDto) {
+
+		return null;
+	}
+
+}

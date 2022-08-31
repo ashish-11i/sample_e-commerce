@@ -1,0 +1,36 @@
+package com.website.ecommerce;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.website.ecommerce.config.AppConstants;
+import com.website.ecommerce.entities.Role;
+
+@SpringBootApplication
+public class ECommerceWebsiteApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ECommerceWebsiteApplication.class, args);
+	}
+	
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+
+		Role userRole = new Role();
+		userRole.setId(AppConstants.NORMAL_USER);
+		userRole.setName("ROLE_USER");
+		
+		Role sellerRole = new Role();
+		sellerRole.setId(501);
+		sellerRole.setName("ROLE_USER");
+	}
+
+}

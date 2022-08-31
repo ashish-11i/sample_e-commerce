@@ -1,0 +1,12 @@
+package com.website.ecommerce.dao;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.website.ecommerce.entities.User;
+
+public interface UserRepo extends JpaRepository<User, Integer> {
+	Optional<User> findUserByUserName(String username);
+	Optional<User> findByEmail(String email);
+}

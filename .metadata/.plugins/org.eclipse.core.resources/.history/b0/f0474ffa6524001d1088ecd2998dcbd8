@@ -1,0 +1,5 @@
+package com.website.ecommerce.dto;
+
+public class RoleDto {
+
+}

@@ -1,0 +1,34 @@
+package com.website.ecommerce.services.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.website.ecommerce.dao.ProductRepo;
+import com.website.ecommerce.dto.ProductDto;
+import com.website.ecommerce.services.ProductService;
+
+public class ProductServiceImpl implements ProductService{
+	
+	@Autowired
+	private ProductRepo productRepo;
+
+	@Override
+	public ProductDto addProduct(ProductDto productDto) {
+		return null;
+	}
+
+	@Override
+	public ProductDto updateProduct(Integer id, ProductDto productDto) {
+		return null;
+	}
+
+	@Override
+	public ProductDto deleteProduct(Integer id) {
+		return null;
+	}
+
+	@Override
+	public ProductDto getProductById(Integer id) {
+		return null;
+	}
+
+}

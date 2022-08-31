@@ -1,0 +1,39 @@
+package com.website.ecommerce.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.website.ecommerce.dto.LoginRequest;
+import com.website.ecommerce.security.CustomUserDetailsService;
+import com.website.ecommerce.services.UserService;
+
+@RestController
+public class AuthController {
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+	
+	@Autowired
+	private UserService userService;
+	
+	public RequestEntity<?> loginUser(@RequestBody LoginRequest loginRequest) throws Exception{
+		String username = loginRequest.getUsername();
+		String password = loginRequest.getPassword();
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		}catch(Exception e) {
+			throw new Exception("Incorrect username or password");
+		}
+		
+		
+		
+		return null;
+	}
+}

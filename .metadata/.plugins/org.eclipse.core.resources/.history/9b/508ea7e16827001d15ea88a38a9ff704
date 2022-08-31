@@ -1,0 +1,47 @@
+package com.website.ecommerce.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.website.ecommerce.dao.ProductRepo;
+import com.website.ecommerce.dto.ProductDto;
+import com.website.ecommerce.services.ProductService;
+
+public class ProductServiceImpl implements ProductService{
+	
+	@Autowired
+	private ProductRepo productRepo;
+
+	@Override
+	public ProductDto addProduct(Integer user_id, ProductDto productDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDto updateProduct(Integer user_id, Integer id, ProductDto productDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDto deleteProduct(Integer user_id, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDto getProductById(Integer user_id, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductDto> getProducts(Integer user_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+}

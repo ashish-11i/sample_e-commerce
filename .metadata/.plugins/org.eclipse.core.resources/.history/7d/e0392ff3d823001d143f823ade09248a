@@ -1,0 +1,48 @@
+package com.website.ecommerce.controllers;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.website.ecommerce.dto.SellerDto;
+import com.website.ecommerce.dto.UpdateSellerRequest;
+import com.website.ecommerce.dto.UpdateUserRequest;
+import com.website.ecommerce.dto.UserDto;
+import com.website.ecommerce.response.ResponseModel;
+import com.website.ecommerce.services.SellerService;
+
+public class SellerController {
+	
+	@Autowired
+	private SellerService sellerService;
+	
+	@PostMapping("/register")
+	ResponseEntity<ResponseModel> registerNewUser(@Valid @RequestBody SellerDto sellerDto) {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(
+				true, HttpStatus.OK, sellerService.registerNewSeller(sellerDto), null, "You have logedin successfully"), HttpStatus.CREATED);
+	}
+	
+	
+	@GetMapping("/singleUser")
+	ResponseEntity<ResponseModel> findUserById(@RequestParam(name = "sellerId") Integer sellerId) {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(
+				true, HttpStatus.OK, sellerService.findSellerById(sellerId), null, "DB data fetched successfully"), HttpStatus.OK);
+	}
+	@GetMapping("/")
+	ResponseEntity<ResponseModel> findAllUser() {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(
+				true, HttpStatus.OK, sellerService.findAllSeller(), null, "DB data fetched successfully"), HttpStatus.OK);
+	}
+	@PostMapping("/update")
+	ResponseEntity<ResponseModel> updateUser(@RequestParam(name = "sellerId") Integer sellerId, @Valid @RequestBody UpdateSellerRequest updateSellerRequest) {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(
+				true, HttpStatus.OK, sellerService.updateSeller(sellerId, updateSellerRequest), null, "DB data updated successfully"), HttpStatus.OK);
+	}
+
+}

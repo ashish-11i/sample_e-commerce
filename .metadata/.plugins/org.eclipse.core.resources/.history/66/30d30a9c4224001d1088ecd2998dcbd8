@@ -1,0 +1,5 @@
+package com.website.ecommerce.security;
+
+public class CustomUserDetailsService {
+
+}

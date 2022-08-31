@@ -1,0 +1,17 @@
+package com.website.ecommerce.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.website.ecommerce.entities.Product;
+
+@Repository
+public interface ProductRepo extends JpaRepository<Product, Integer> {
+
+	@Query("select p.product_id, p.brand_name, p.description, p.product_name from Product p where user_id=?1")
+	List<Product> findProductByUserId(Integer user_id);
+
+}

@@ -1,0 +1,37 @@
+package com.website.ecommerce.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.website.ecommerce.services.MyUserDetails;
+
+public class JwtAuthenticationFilter {
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+
+	
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+
+		String authorizationHeader = request.getHeader("Authorization");
+
+		String userName = null;
+		String jwt = null;
+
+		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+			jwt = authorizationHeader.substring(7);
+			userName = jwtUtil.extractUsername(jwt);
+		}
+		if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails userDetails = myUserDetailsService.loadUserByUsername(userName);
+			if(jwtUtil.validateToken(jwt, userDetails)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}
+		}
+		filterChain.doFilter(request, response);
+	}
+}

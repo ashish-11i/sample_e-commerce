@@ -1,0 +1,40 @@
+package com.website.ecommerce.services.impl;
+
+import java.util.List;
+
+import com.website.ecommerce.dto.SellerDto;
+import com.website.ecommerce.services.SellerService;
+
+public class SellerServiceImpl implements SellerService {
+
+	@Override
+	public SellerDto registerNewSeller(SellerDto sellerDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void sellerLogin() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public SellerDto findSellerById(Integer sellerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SellerDto> findAllSeller() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SellerDto updateUser(Integer sellerId, SellerDto sellerDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

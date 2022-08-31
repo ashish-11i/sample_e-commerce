@@ -1,0 +1,73 @@
+package com.website.ecommerce.services.impl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.website.ecommerce.dao.SellerRepo;
+import com.website.ecommerce.dto.SellerDto;
+import com.website.ecommerce.dto.UpdateSellerRequest;
+import com.website.ecommerce.entities.Seller;
+import com.website.ecommerce.exceptions.ResourceAlreadyExistException;
+import com.website.ecommerce.exceptions.ResourceNotFoundException;
+import com.website.ecommerce.services.SellerService;
+
+public class SellerServiceImpl implements SellerService {
+	
+	@Autowired
+	private SellerRepo sellerRepo;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public SellerDto registerNewSeller(SellerDto sellerDto) {
+		
+String username = sellerDto.getUsername();
+		
+		if(sellerRepo.findByUsername(username).isPresent()) {
+			throw new ResourceAlreadyExistException("User", "username", username);
+		}
+		String email = sellerDto.getEmail();
+		if(sellerRepo.findByEmail(email).isPresent()) {
+			throw new ResourceAlreadyExistException("User", "email", email);
+		}
+		
+		Seller seller = modelMapper.map(sellerDto, Seller.class);
+		Seller createdSeller = sellerRepo.save(seller);
+		return modelMapper.map(createdSeller, SellerDto.class);
+	}
+
+	@Override
+	public void sellerLogin() {
+
+		
+	}
+
+	@Override
+	public SellerDto findSellerById(Integer sellerId) {
+		Seller seller =this.sellerRepo.findById(sellerId).orElseThrow(()->new ResourceNotFoundException("Seller", "sellerId", sellerId));
+		return this.modelMapper.map(seller, SellerDto.class);
+	}
+
+	@Override
+	public List<SellerDto> findAllSeller() {
+		List<Seller> sellers = this.sellerRepo.findAll();
+		List<SellerDto> sellerDtos = sellers.stream().map((seller)->
+			this.modelMapper.map(seller, SellerDto.class)
+		).collect(Collectors.toList());
+		return sellerDtos;
+	}
+
+	@Override
+	public SellerDto updateSeller(Integer sellerId, UpdateSellerRequest sellerDto) {
+		Seller existSeller = sellerRepo.findById(sellerId).orElseThrow(()-> new ResourceNotFoundException("User", "userID", sellerDto));
+		existSeller.setLastName(sellerDto.getLastName());
+		existSeller.setEmail(sellerDto.getEmail());
+		existSeller.setPassword(sellerDto.getPassword());
+		return this.modelMapper.map(existSeller, SellerDto.class);
+	}
+
+}

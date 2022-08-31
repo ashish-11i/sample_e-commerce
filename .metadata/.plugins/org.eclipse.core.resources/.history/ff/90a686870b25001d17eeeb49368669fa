@@ -1,0 +1,14 @@
+package com.website.ecommerce.services;
+
+import java.util.List;
+
+import com.website.ecommerce.dto.UpdateUserRequest;
+import com.website.ecommerce.dto.UserDto;
+
+public interface UserService {
+
+	UserDto registerNewUser(UserDto userDto);
+	UserDto findUserById(Integer userId);
+	List<UserDto> findAllUser();
+	UserDto updateUser(Integer userId, UpdateUserRequest userDto);
+}

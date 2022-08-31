@@ -1,0 +1,63 @@
+package com.website.ecommerce.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.website.ecommerce.dto.ProductDto;
+import com.website.ecommerce.response.ResponseModel;
+import com.website.ecommerce.services.ProductService;
+
+@RestController
+@RequestMapping("api/seller")
+public class ProductController {
+	
+	@Autowired
+	private ProductService productService;
+	
+	@PostMapping("/product")
+	public ResponseEntity<ResponseModel> addProduct(
+			@RequestParam(name = "user_id") Integer user_id, 
+			@RequestBody ProductDto productDto) {
+		return new ResponseEntity<ResponseModel>(
+				new ResponseModel(true, HttpStatus.OK, productService.addProduct(user_id, productDto), null, "Product added in DB successfully"),
+				HttpStatus.CREATED);
+	}
+	@PutMapping("/product")
+	public ResponseEntity<ResponseModel> updateProduct(
+			@RequestParam(name = "user_id") Integer user_id,
+			@RequestParam(name = "product_id") Integer product_id,
+			@RequestBody ProductDto productDto) {
+		return new ResponseEntity<ResponseModel>(
+				new ResponseModel(true, HttpStatus.OK, productService.updateProduct(user_id, product_id, productDto), null, "Product updated in DB successfully"), 
+				HttpStatus.OK);
+	}
+	@DeleteMapping("/product")
+	public ResponseEntity<ResponseModel> deleteProduct(
+			@RequestParam(name = "user_id") Integer user_id,
+			@RequestParam(name = "product_id") Integer product_id) {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(true, HttpStatus.OK, productService.deleteProduct(user_id, product_id), null, "Above deleted from DB successfully"), 
+				HttpStatus.OK);
+	}
+	@GetMapping("/product")
+	public ResponseEntity<ResponseModel> getProductById(
+			@RequestParam(name = "user_id") Integer user_id,
+			@RequestParam(name = "product_id") Integer product_id) {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(true, HttpStatus.OK, productService.getProductById(user_id, product_id), null, "Product fetched of by productId from DB successfully"),
+				HttpStatus.OK);
+	}
+	@GetMapping("/product")
+	public ResponseEntity<ResponseModel> getProducts(@RequestParam(name = "user_id") Integer user_id) {
+		return new ResponseEntity<ResponseModel>(new ResponseModel(true, HttpStatus.OK, productService.getProducts(user_id), null, "All Product fetched of a single user from DB successfully"),
+				HttpStatus.OK);
+	}
+
+}

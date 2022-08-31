@@ -1,0 +1,5 @@
+package com.website.ecommerce.entities;
+
+public class Role {
+
+}

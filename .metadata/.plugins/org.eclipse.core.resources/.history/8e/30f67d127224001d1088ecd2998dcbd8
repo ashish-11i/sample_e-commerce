@@ -1,0 +1,39 @@
+package com.website.ecommerce.dto;
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.website.ecommerce.config.AppConstants;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserDto {
+	private Integer id;
+	
+	@NotBlank
+	@Size(min = 3, max = 60, message = "First Name must be between 3 to 60 characters")
+	@Pattern(regexp =  AppConstants.NAME_REGEX)
+	private String firstName;
+	
+	@Pattern(regexp =  "^[a-zA-Z]+$")
+	private String lastName;
+	
+	@Pattern(regexp = AppConstants.EMAIL_REGEX)
+	private String email;
+	
+	private String username;
+	
+	private String password;
+	
+	private LocalDate dob;
+	private Set<RoleDto> roles = new HashSet<>();
+	
+}
